@@ -1,12 +1,27 @@
 # eDoc Format
 
-## Goals:
+## Context
+
+This app will be used by a very small group of technicians to create and edit work instructions for an electronics assembly company. The company's primary operations are soldering (SMT, THA, select solder, wave), bonding, conformal coat, environmental and electrical test, and packaging.
+
+The existing workflow is slow, clunky, and relatively uncontrolled. (Files are versioned, but performing a full manual visual diff is the only way to compare two documents.) The software used is abandonware and does not match our needs well.
+
+## Goal
 
 Config-driven renderer for multi-page instruction documents. The user supplies a JSON file defining the document structure; the app renders it as an HTML page suitable for printing to PDF.
 
+## Definitions
+
+- Package: A bundle of files that can be rendered into a single complete work instruction document.
+- Page: A single rectangular editing area, typically corresponding to one assembly step or area (SMT top, R112 bonding, etc.)
+- Page Template: A chunk of JSON listing elements to be **added** to a page.
+- Element: A single item (text box, image, etc) that can be put on a page
+- Modifier: An atomic change to be made to a document. Multiple modifiers are applied during rendering.
+- Slot: ??
+
 ## Deployment
 
-Served via GitHub Pages (fully static). No server-side processing.
+Served via GitHub Pages (fully static). No server-side processing. No build step.
 
 ## File Access Model
 
@@ -25,9 +40,10 @@ Deterministic ZIP container with the following:
 
 ```
 /doc.json               # canonical JSON: document metadata & page layout
+/modifiers/...			# Additional modifier JSONs to append to document construction
 /assets/images/...      # embedded bitmaps (png/jpg)
 /assets/vector/...      # embedded SVGs (including CCA board view SVGs)
-/bom/...                # BOM and ancillary CSV/JSON
+/assets/bom/...         # BOM and ancillary CSV/JSON
 ```
 
 ## 3rd-Party Code
