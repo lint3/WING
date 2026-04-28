@@ -1,18 +1,12 @@
 # Architecture Decisions
 
-## Renderer / Composition Split
+## Application Architecture
 
-The renderer is dumb. It takes a single, already-resolved `doc.json` and renders it. It has no knowledge of templates, layers, or variances. All composition happens upstream as a separate pre-processing step.
+Renderer + editor. The app loads a ZIP package, applies modifiers on top of `doc.json`, renders the result, and allows the user to edit and re-download.
 
-## Document Composition: Layered Merge Stack
+## Document Composition: Modifiers
 
-A document is produced by merging an ordered stack of JSON layers. Later layers override earlier ones. Example ordering:
-
-```
-company_defaults → product_family → customer_variance → document_specific
-```
-
-The CAD-tree visualization shows this stack; clicking a layer shows the document as it would render if the stack stopped there.
+A document is produced by taking `doc.json` as a base and applying an ordered list of modifiers. Each modifier targets exactly one element and describes an atomic change (add, remove, move, resize, text change, etc.). Modifiers live in `/modifiers/` inside the ZIP.
 
 ## Pages: Template Instantiations with Slots
 
@@ -28,7 +22,24 @@ Templates define structural layout regions (slots) — not semantic content fiel
 
 Every template should expose an `extra_elements` slot: an ordered list of freeform elements (text block, image, table, assembly view) appended below the structured content. Avoids needing a template change for one-off additions.
 
+## Build Tooling
+
+Vite with JSX. Built output deployed to GitHub Pages via GitHub Actions on push. Source lives on `main`; Actions builds and publishes to `gh-pages`.
+
+## Three-Pane UI Layout
+
+| Pane | Width | Purpose |
+|------|-------|---------|
+| Tree | 20% | CAD-style tree of templates, modifiers, assets. Collapsible nodes. |
+| Editor | 40% | Text editor showing the file or section for the selected tree item. |
+| Preview | 40% | Rendered view of one page. Updates on last-valid JSON state. |
+
+- Clicking a tree item loads the corresponding file/section in the editor and updates the preview.
+- Clicking an element in the preview jumps to that element in the editor.
+- While JSON is invalid mid-edit, the preview freezes on the last valid state with a small, unobtrusive error indicator.
+- Page navigation: clicking any tree item renders whatever corresponds to it (to be refined later).
+
 ## Open Questions
 
-- **Page list merge semantics**: how a variance layer expresses "insert page after X" or "remove page Y" without replacing the whole list.
+- **File granularity**: what should the unit of a "file" be? Too granular (one file per element) is noisy; too broad (everything in `doc.json`) makes the editor hard to navigate. The right split likely maps to the tree structure but needs worked out concretely.
 - **Template versioning**: what happens to existing documents when a template gains or removes a slot.

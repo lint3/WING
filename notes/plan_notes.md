@@ -8,20 +8,20 @@ The existing workflow is slow, clunky, and relatively uncontrolled. (Files are v
 
 ## Goal
 
-Config-driven renderer for multi-page instruction documents. The user supplies a JSON file defining the document structure; the app renders it as an HTML page suitable for printing to PDF.
+Config-driven renderer + editor for multi-page instruction documents. The user supplies a ZIP package defining the document structure; the app renders it and allows editing via a structured UI.
 
 ## Definitions
 
 - Package: A bundle of files that can be rendered into a single complete work instruction document.
 - Page: A single rectangular editing area, typically corresponding to one assembly step or area (SMT top, R112 bonding, etc.)
-- Page Template: A chunk of JSON listing elements to be **added** to a page.
+- Page Template: A reusable chunk of JSON that adds elements to a page and creates named slots.
 - Element: A single item (text box, image, etc) that can be put on a page
-- Modifier: An atomic change to be made to a document. Multiple modifiers are applied during rendering.
-- Slot: ??
+- Modifier: An atomic change targeting exactly one element. Multiple modifiers are applied during rendering.
+- Slot: A named input to a template whose value is provided at instantiation time, injected into specific elements within the template.
 
 ## Deployment
 
-Served via GitHub Pages (fully static). No server-side processing. No build step.
+Served via GitHub Pages (fully static). No server-side processing. Built with Vite; see decisions.md.
 
 ## File Access Model
 
@@ -29,10 +29,10 @@ No native filesystem access. Users drag-and-drop a project `.zip` into the app t
 
 ## Requirements / End-User Workflow
 
-1. User launches the renderer.
-2. User drops a `.zip` package into the app.
-3. The app parses `doc.json` from the package and renders the full document.
-4. User prints (or exports) to PDF via the browser's print dialog.
+1. User launches the app. Sees a drop zone and a "create from scratch" button.
+2. User drops a `.zip` package. App parses `doc.json` and modifiers, renders the document.
+3. User edits via the three-pane UI (see decisions.md).
+4. User downloads the updated `.zip` or prints directly to PDF via the browser's print dialog.
 
 ## File Package Format
 
