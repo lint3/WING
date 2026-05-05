@@ -16,6 +16,7 @@ Defines the company-wide standard for general formatting, layout, font, color sc
 
 - The "DNI" page should have a diagram of the CCA and some components colored #ff0000a0.
 - Page header and footer layout
+- Page templates
 
 ## `document_data.json`
 
@@ -30,7 +31,7 @@ Fills out fields defined in `document_template.json` and `document/*`. Also incl
   - Assembly rev name
   - BOM version
   - Custom data may be added.
-- Ordered list of page templates
+- Ordered list of pages
 - Lists of meatspace items used in the assembly process
   - Tooling
   - Label programs

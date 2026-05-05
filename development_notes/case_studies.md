@@ -15,3 +15,9 @@ All six documents had to be updated individually. Each was opened, located, and 
 **What the app should support:** a shared base layer defining CCA label details (printer program, reference images, QR codes) that all six documents inherit. Updating the base propagates the change to every document in the family automatically, with no per-document editing required.
 
 This is the primary motivation for the modifier inheritance model: document-specific files should only contain what is actually specific to that document. Shared properties belong in a shared layer.
+
+## Leaded or Lead-Free Assembly
+
+Some CCA assemblies are lead-free (RoHS) and some are leaded (aerospace). Documents typically should have an indicator icon in the header which indicates which is the case.
+
+This could be captured by a modifier applied to the base-level page template - This highlights the importance of a heirarchical design.
