@@ -37,4 +37,3 @@ Fills out fields defined in `document_template.json` and `document/*`. Also incl
   - Label programs
   - Consumables (solder, chipbonder)
   - Others (we should be able to add custom lists)
--

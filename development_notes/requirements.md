@@ -8,7 +8,6 @@ These items describe real-world constraints that influence what the app must do 
   - Include the data in a source package which is then uploaded to company document control system
   - Upload data to company network file share (Not recommended - No access controls of any kind, no versioning)
   - Send attachments directly via email or chat (Not recommended - Not centralized, no versioning)
-- 
 
 # Requirements / Acceptance Criteria
 
@@ -17,7 +16,6 @@ These items describe real-world constraints that influence what the app must do 
 - A tree view of the document structure is provided.
   - Clicking an item in the tree view scrolls the page preview and text editor to that location.
 - User can edit JSON file content, and the preview pane updates automatically.
-- 
 - User can click a "print" button, after which a rendered PDF and a zipped source package are downloaded.
 
 # Design Decisions
