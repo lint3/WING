@@ -1,8 +1,4 @@
-# Architecture Decisions
 
-## Application Architecture
-
-Renderer + editor. The app loads a ZIP package, applies modifiers on top of `doc.json`, renders the result, and allows the user to edit and re-download.
 
 ## Document Composition: Modifiers
 

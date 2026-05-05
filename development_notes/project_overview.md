@@ -2,7 +2,7 @@
 
 ## Context
 
-This app will be used by a very small group of technicians to create and edit work instructions for an electronics assembly company. The company's primary operations are soldering (SMT, THA, select solder, wave), bonding, conformal coat, environmental and electrical test, and packaging.
+This app will be used by a group of (3-6) technicians to create and edit work instructions for an electronics assembly company. The company's primary operations are soldering (SMT, THA, select solder, wave), bonding, conformal coat, environmental and electrical test, and packaging.
 
 The existing document editing workflow is slow, clunky, and relatively uncontrolled. (Files are versioned, but performing a full manual visual diff is the only way to compare two documents.) The software used is abandonware and does not match our needs well.
 
@@ -46,7 +46,3 @@ Each assembly view instance has a unique wrapper ID (e.g. `#assy00c3`). Highligh
 ```
 
 This is print-compatible and trivial to generate from the JSON definition.
-
-### Page Size
-
-Hard-coded: **landscape Letter (11 × 8.5 inches)**. No user-selectable page size for now.

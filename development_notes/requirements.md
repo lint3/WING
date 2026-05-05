@@ -14,6 +14,9 @@ These items describe real-world constraints that influence what the app must do 
 
 - App is used in a web browser.
 - User can drag-and-drop a zip file into the viewport to import a project.
-- 
 - User can click a "print" button, after which a rendered PDF is downloaded.
+
+# Design Decisions
+
+- Page dimensions may be hard-coded to 8.5x11 inches, landscape orientation.
 -
