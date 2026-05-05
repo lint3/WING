@@ -6,214 +6,117 @@
     "last_edited": "2024-11-15T14:32:00Z",
     "last_edited_by": "jdoe",
     "created": "2023-06-01T09:00:00Z",
-    "created_by": "msmith"
-  },
-
-  "assembly": {
+    "created_by": "msmith",
     "customer_name": "AeroTech Systems",
-    "assembly_name": "CCA-7800A Power Distribution Board",
+    "assembly_name": "Power Distribution Board",
     "assembly_number": "7800-2001-01",
-    "assembly_rev_name": "Rev C",
-    "bom_version": "BOM-7800-2001-01-C",
+    "assembly_rev": "E",
+    "bom_version": "C",
     "process_type": "lead_free"
   },
 
   "pages": [
     {
-      "id": "cover_01",
-      "template": "cover",
+      "id": "title_page",
+      "parent": "header_footer",
       "slots": {
-        "title": "Power Distribution Board — Assembly Work Instructions",
-        "assembly_number": "7800-2001-01",
-        "revision": "C",
-        "logo": "assets/images/company_logo.png",
-        "extra_elements": []
-      }
-    },
-    {
-      "id": "tooling_01",
-      "template": "table_page",
-      "slots": {
-        "title": "Required Tooling",
-        "table": {
-          "headers": ["Item", "Description", "Part Number", "Qty"],
-          "rows": [
-            ["1", "Soldering Station, Lead-Free", "WT-1001", "1"],
-            ["2", "Tip Cleaner", "TC-0042", "1"],
-            ["3", "Tweezers, ESD-Safe, Fine", "TW-ESD-04", "2"],
-            ["4", "Magnifier, 3x", "MAG-3X-01", "1"],
-            ["5", "Torque Driver, 0.5 N·m", "TD-0050", "1"]
-          ]
-        },
-        "extra_elements": []
-      }
-    },
-    {
-      "id": "smt_top_01",
-      "template": "step_page",
-      "slots": {
-        "step_number": "SMT-01",
-        "step_title": "Top-Side Component Placement",
-        "instructions": "1. Verify CCA top side is clean and free of contamination.\n2. Load program P-7800-TOP into pick-and-place machine.\n3. Place all components per BOM reference designators.\n4. Verify polarity on U1, U3, U5, D1–D4.\n5. Run AOI inspection; record results on traveler.",
-        "image": "assets/images/smt_top_ref.jpg",
-        "callouts": [],
-        "warnings": [
-          {
-            "type": "warning",
-            "text": "ESD-sensitive assembly — wear wrist strap at all times."
-          }
-        ],
-        "extra_elements": []
-      }
-    },
-    {
-      "id": "reflow_01",
-      "template": "step_page",
-      "slots": {
-        "step_number": "SMT-02",
-        "step_title": "Reflow Solder — Top Side",
-        "instructions": "1. Load profile 7800-TOP-LF into reflow oven.\n2. Verify profile matches lead-free solder paste specification.\n3. Run first article; record thermal profile results.\n4. Process remaining boards.\n5. Perform visual inspection per IPC-A-610 Class 3.",
-        "image": "assets/images/reflow_profile_7800.png",
-        "callouts": [],
-        "warnings": [
-          {
-            "type": "caution",
-            "text": "Verify lead-free profile is loaded. Leaded profile will cause cold joints."
-          }
-        ],
-        "extra_elements": []
-      }
-    },
-    {
-      "id": "xray_01",
-      "template": "xray_page",
-      "slots": {
-        "xray_image": "assets/images/xray_u3.jpg",
-        "components": "U3 (QFN-48), U5 (QFN-32)",
-        "criteria": "Inspect for voiding < 25% of solder joint area. No bridging between adjacent pads. All perimeter pads must show wetting.",
-        "extra_elements": []
-      }
-    },
-    {
-      "id": "tha_01",
-      "template": "step_page",
-      "slots": {
-        "step_number": "THA-01",
-        "step_title": "Through-Hole Assembly — Connectors",
-        "instructions": "1. Insert J1, J2, J3 per assembly drawing.\n2. Verify connector orientation — pin 1 marked on silkscreen.\n3. Wave solder or hand solder per process specification.\n4. Trim leads flush to 0.020\" ± 0.010\".\n5. Clean flux residue with approved solvent.",
-        "image": "assets/images/tha_connectors.jpg",
-        "callouts": [
-          { "text": "Pin 1", "position": { "x": 1.2, "y": 1.8 } }
-        ],
-        "warnings": [
-          {
-            "type": "note",
-            "text": "J2 is keyed — do not force. If pins do not align, verify orientation."
-          }
-        ],
-        "extra_elements": []
-      }
-    },
-    {
-      "id": "dni_01",
-      "template": "dni_page",
-      "slots": {
-        "assembly_view_id": "assets/cca/board_top.svg",
-        "view": "top",
-        "dni_components": ["R47", "R48", "C22", "C23", "Q3"],
-        "notes": "These positions are populated only on Rev D and later. Do not install on Rev C assemblies.",
-        "extra_elements": []
-      }
-    },
-    {
-      "id": "conformal_coat_01",
-      "template": "step_page",
-      "slots": {
-        "step_number": "CC-01",
-        "step_title": "Conformal Coat Application",
-        "instructions": "1. Mask connectors J1, J2, J3 and test points TP1–TP4 with masking tape.\n2. Apply HumiSeal 1B31 per spray specification SP-0042.\n3. Coat thickness: 0.001\"–0.003\". Verify with wet film gauge.\n4. Cure per manufacturer instructions (24 hrs ambient or 1 hr at 60 °C).\n5. Remove masking and inspect coverage.",
-        "image": "assets/images/coat_coverage.jpg",
-        "callouts": [],
-        "warnings": [
-          {
-            "type": "warning",
-            "text": "Use approved respirator when spraying. Refer to SDS for HumiSeal 1B31."
-          }
-        ],
-        "extra_elements": []
-      }
-    },
-    {
-      "id": "label_01",
-      "template": "step_page",
-      "slots": {
-        "step_number": "LBL-01",
-        "step_title": "Serial Number Label Application",
-        "instructions": "1. Print label using label program LP-7800-SN from network share.\n2. Verify serial number format: 7800A-24-XXXX.\n3. Apply label to location indicated in reference photo.\n4. Scan QR code to verify it links to the correct traveler record.",
-        "image": "assets/images/label_placement.jpg",
-        "callouts": [],
-        "warnings": [],
-        "extra_elements": [
-          {
+        "page_title": "Work Instructions",
+        "extra_elements": {
+          "logo": {
             "type": "image",
-            "source": "assets/images/qrcode.jpg",
-            "position": { "x": 8.0, "y": 5.5, "width": 1.5, "height": 1.5 },
-            "caption": "QR Code — links to traveler"
-          },
-          {
-            "type": "image",
-            "source": "assets/images/leadfree.png",
-            "position": { "x": 8.0, "y": 7.2, "width": 0.6, "height": 0.6 },
-            "caption": "Lead-free indicator"
+            "loc": [4, 4],
+            "dims": [4, 3],
+            "src": "logo.png"
           }
-        ]
-      }
-    },
-    {
-      "id": "test_01",
-      "template": "table_page",
-      "slots": {
-        "title": "Electrical Test — Acceptance Values",
-        "table": {
-          "headers": ["Test Point", "Parameter", "Min", "Max", "Unit"],
-          "rows": [
-            ["TP1", "VCC Output", "4.75", "5.25", "VDC"],
-            ["TP2", "Current Draw (idle)", "0", "50", "mA"],
-            ["TP3", "Current Draw (load)", "120", "200", "mA"],
-            ["J1-1 to J1-2", "Isolation Resistance", "100", "", "MΩ"],
-            ["TP4", "Signal Amplitude", "2.8", "3.6", "Vp-p"]
-          ]
-        },
-        "extra_elements": []
+        }
       }
     }
   ],
 
   "meatspace": {
     "tooling": [
-      { "id": "tool_01", "name": "Soldering Station, Lead-Free", "part_number": "WT-1001", "qty": 1 },
-      { "id": "tool_02", "name": "Tip Cleaner", "part_number": "TC-0042", "qty": 1 },
-      { "id": "tool_03", "name": "Tweezers, ESD-Safe, Fine", "part_number": "TW-ESD-04", "qty": 2 },
-      { "id": "tool_04", "name": "Magnifier, 3x", "part_number": "MAG-3X-01", "qty": 1 },
-      { "id": "tool_05", "name": "Torque Driver, 0.5 N·m", "part_number": "TD-0050", "qty": 1 }
+      {
+        "id": "tool_01",
+        "name": "Soldering Station, Lead-Free",
+        "part_number": "WT-1001",
+        "qty": 1
+      },
+      {
+        "id": "tool_02",
+        "name": "Tip Cleaner",
+        "part_number": "TC-0042",
+        "qty": 1
+      },
+      {
+        "id": "tool_03",
+        "name": "Tweezers, ESD-Safe, Fine",
+        "part_number": "TW-ESD-04",
+        "qty": 2
+      },
+      {
+        "id": "tool_04",
+        "name": "Magnifier, 3x",
+        "part_number": "MAG-3X-01",
+        "qty": 1
+      },
+      {
+        "id": "tool_05",
+        "name": "Torque Driver, 0.5 N·m",
+        "part_number": "TD-0050",
+        "qty": 1
+      }
     ],
     "label_programs": [
-      { "id": "lbl_01", "name": "Serial Number Label — CCA-7800A", "program_id": "LP-7800-SN", "location": "\\\\fileserver\\labels\\7800\\" }
+      {
+        "id": "lbl_01",
+        "name": "Serial Number Label — CCA-7800A",
+        "program_id": "LP-7800-SN",
+        "location": "\\\\fileserver\\labels\\7800\\"
+      }
     ],
     "consumables": [
-      { "id": "cons_01", "name": "Solder Paste, SAC305, Lead-Free", "part_number": "SP-SAC305-T4", "manufacturer": "Indium" },
-      { "id": "cons_02", "name": "Flux, No-Clean", "part_number": "NC-5000", "manufacturer": "Kester" },
-      { "id": "cons_03", "name": "Conformal Coat, HumiSeal 1B31", "part_number": "HS-1B31-GL", "manufacturer": "Chase" },
-      { "id": "cons_04", "name": "Solvent, Flux Remover", "part_number": "FR-100", "manufacturer": "MG Chemicals" }
+      {
+        "id": "cons_01",
+        "name": "Solder Paste, SAC305, Lead-Free",
+        "part_number": "SP-SAC305-T4",
+        "manufacturer": "Indium"
+      },
+      {
+        "id": "cons_02",
+        "name": "Flux, No-Clean",
+        "part_number": "NC-5000",
+        "manufacturer": "Kester"
+      },
+      {
+        "id": "cons_03",
+        "name": "Conformal Coat, HumiSeal 1B31",
+        "part_number": "HS-1B31-GL",
+        "manufacturer": "Chase"
+      },
+      {
+        "id": "cons_04",
+        "name": "Solvent, Flux Remover",
+        "part_number": "FR-100",
+        "manufacturer": "MG Chemicals"
+      }
     ],
     "custom_lists": [
       {
         "id": "custom_01",
         "name": "Reference Documents",
         "items": [
-          { "description": "Assembly Drawing 7800-2001-01 Rev C", "location": "PLM-7800-DWG-01" },
-          { "description": "IPC-A-610 Class 3 Acceptance Criteria", "location": "Library" },
-          { "description": "Reflow Profile SP-7800-TOP-LF", "location": "Oven Controller #3" }
+          {
+            "description": "Assembly Drawing 7800-2001-01 Rev C",
+            "location": "PLM-7800-DWG-01"
+          },
+          {
+            "description": "IPC-A-610 Class 3 Acceptance Criteria",
+            "location": "Library"
+          },
+          {
+            "description": "Reflow Profile SP-7800-TOP-LF",
+            "location": "Oven Controller #3"
+          }
         ]
       }
     ]

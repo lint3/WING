@@ -5,7 +5,7 @@
   "description": "Adds lead-free process indicator to page header when process_type is 'lead_free'",
 
   "conditions": {
-    "assembly.process_type": "lead_free"
+    "process_type": "lead_free"
   },
 
   "targets": [

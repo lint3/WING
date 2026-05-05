@@ -2,237 +2,132 @@
   "schema_version": 1,
   "name": "Standard Work Instructions Template",
   "description": "Company-wide base template for assembly work instructions",
+  "page_units": "inch",
 
-  "defaults": {
-    "page": {
-      "width_inches": 11,
-      "height_inches": 8.5,
-      "orientation": "landscape",
-      "margin_inches": 0.5
+  "element_templates": {
+    "red_warning_box": {
+      "description": "Prominent Warning",
+      "slots": {
+        "warning_text": {
+          "type": "text",
+          "description": "Warning Message Text"
+        }
+      },
+      "elements": [
+        {
+          "type": "rectangle",
+          "dims": [5, 3],
+          "loc": [0, 0],
+          "line_thickness_pt": 10,
+          "line_color:": "#ff0000ff"
+        },
+        {
+          "type": "text",
+          "dims": [4.5, 2.5],
+          "loc": [0.25, 0.25],
+          "font_color": "#ff0000ff",
+          "content": "{{warning_text}}"
+        }
+      ]
     },
-    "fonts": {
-      "heading": "Arial Bold",
-      "body": "Arial",
-      "callout": "Arial Bold",
-      "sizes": {
-        "title": 18,
-        "heading": 14,
-        "body": 10,
-        "caption": 8,
-        "callout": 9
-      }
-    },
-    "colors": {
-      "primary": "#003366",
-      "secondary": "#006699",
-      "accent": "#ff6600",
-      "dni_highlight": "#ff0000a0",
-      "border": "#cccccc",
-      "background": "#ffffff"
+    "basic_circle": {
+      "description": "Dummy circle element template",
+      "elements": [
+        {
+          "type": "circle",
+          "dims": [3, 3],
+          "line_thickness_pt": 3
+        }
+      ]
     }
   },
 
   "page_templates": {
-    "cover": {
-      "description": "Cover page with assembly title, revision, and logos",
-      "slots": {
-        "title": { "type": "text", "description": "Assembly title" },
-        "assembly_number": { "type": "text", "description": "Assembly part number" },
-        "revision": { "type": "text", "description": "Document revision" },
-        "logo": { "type": "image", "description": "Company logo" },
-        "extra_elements": {
-          "type": "element_list",
-          "description": "Additional freeform elements appended below structured content"
-        }
+    "empty_base": {
+      "description": "Empty base landscape letter page",
+      "page_width": 11,
+      "page_height": 8.5,
+      "page_margin": 0.125,
+      "page_background": "#ffffffff",
+      "defaults": {
+        "font_size_pt": 10,
+        "font": "Arial",
+        "font_color": "#000000ff",
+        "line_thickness_pt": "hairline",
+        "line_color": "#000000ff",
+        "fill_color": "#00000000"
       },
-      "layout": [
-        {
-          "id": "cover_logo",
+      "extra_vars": {
+        "dni_color": {
+          "type": "color",
+          "description": "DNI Component Highlight",
+          "value": "#ff0000a0"
+        },
+        "polarity_color": {
+          "type": "color",
+          "description": "Polarized Component Highlight",
+          "value": "#f080d0a0"
+        },
+        "line_color": {
+          "type": "color",
+          "description": "Line Color",
+          "value": "#000000ff"
+        }
+      }
+    },
+
+    "header_footer": {
+      "description": "Basic page with only header and footer",
+      "parent": "empty_base",
+      "slots": {
+        "page_title": { "type": "text", "description": "Page title" },
+        "assembly_number": { "type": "text", "description": "Assembly Number" },
+        "assembly_rev": { "type": "text", "description": "Assembly Rev" }
+      },
+      "elements": {
+        "assembly_title": {
+          "type": "text",
+          "loc": [0.5, 0.5],
+          "dims": [2, 0.25],
+          "content": "{{assembly_number}} Rev {{assembly_rev}}"
+        },
+        "page_title": {
+          "type": "text",
+          "loc": [2.5, 0.5],
+          "dims": [2, 0.25],
+          "content": "{{page_title}}"
+        },
+        "center_content_box": {
+          "type": "rectangle",
+          "loc": [0, 0],
+          "dims": [10.5, 8]
+        }
+      }
+    },
+
+    "large_center_image": {
+      "description": "Large image, and text box on right side",
+      "parent": "header_footer",
+      "slots": {
+        "center_image": {
           "type": "image",
-          "source": "{{logo}}",
-          "position": { "x": 0.5, "y": 0.5, "width": 2.0, "height": 1.0 }
+          "description": "Primary image on center of page"
         },
-        {
-          "id": "cover_title",
-          "type": "text",
-          "content": "{{title}}",
-          "style": { "font": "heading", "size": "title", "color": "primary" },
-          "position": { "x": 0.5, "y": 3.0, "width": 10.0, "height": 1.0 },
-          "alignment": "center"
-        },
-        {
-          "id": "cover_assembly",
-          "type": "text",
-          "content": "Assembly: {{assembly_number}}  |  Rev: {{revision}}",
-          "style": { "font": "body", "size": "body" },
-          "position": { "x": 0.5, "y": 4.2, "width": 10.0, "height": 0.5 },
-          "alignment": "center"
+        "instruction_text": {
+          "type": "rich_text",
+          "description": "Instruction text on right hand side"
         }
-      ]
-    },
-
-    "dni_page": {
-      "description": "Do Not Install page — CCA diagram with components highlighted",
-      "slots": {
-        "assembly_view_id": { "type": "text", "description": "Reference to the CCA SVG to display" },
-        "view": { "type": "select", "options": ["top", "bottom"], "description": "Which side of the board to show" },
-        "dni_components": { "type": "element_list", "description": "List of component designators to highlight as DNI" },
-        "notes": { "type": "text", "description": "Additional DNI notes" },
-        "extra_elements": { "type": "element_list" }
       },
-      "layout": [
-        {
-          "id": "dni_svg",
-          "type": "assembly_view",
-          "source": "{{assembly_view_id}}",
-          "view": "{{view}}",
-          "position": { "x": 0.5, "y": 0.5, "width": 6.0, "height": 7.5 },
-          "highlights": [
-            {
-              "color": "dni_highlight",
-              "components": "{{dni_components}}"
-            }
-          ]
+      "elements": {
+        "center_image": {
+          "loc": [0.5, 0, 5],
+          "dims": [8, 7]
         },
-        {
-          "id": "dni_legend",
-          "type": "text",
-          "content": "Red components are DNI (Do Not Install)",
-          "style": { "font": "body", "size": "caption", "color": "dni_highlight" },
-          "position": { "x": 6.8, "y": 0.5, "width": 3.7, "height": 0.4 }
-        },
-        {
-          "id": "dni_notes",
-          "type": "text",
-          "content": "{{notes}}",
-          "style": { "font": "body", "size": "body" },
-          "position": { "x": 6.8, "y": 1.2, "width": 3.7, "height": 2.0 }
+        "instruction_text": {
+          "loc": [9, 0.5],
+          "dims": [1.5, 7]
         }
-      ]
-    },
-
-    "step_page": {
-      "description": "Generic assembly step page with instruction text, image, and callouts",
-      "slots": {
-        "step_number": { "type": "text", "description": "Step identifier (e.g., SMT-01)" },
-        "step_title": { "type": "text", "description": "Short title for the step" },
-        "instructions": { "type": "text", "description": "Step instruction text" },
-        "image": { "type": "image", "description": "Reference photo or diagram" },
-        "callouts": { "type": "element_list", "description": "Callout labels pointing to image regions" },
-        "warnings": { "type": "element_list", "description": "Warning/caution blocks for this step" },
-        "extra_elements": { "type": "element_list" }
-      },
-      "layout": [
-        {
-          "id": "step_header",
-          "type": "text",
-          "content": "Step {{step_number}}: {{step_title}}",
-          "style": { "font": "heading", "size": "heading", "color": "primary" },
-          "position": { "x": 0.5, "y": 0.5, "width": 10.0, "height": 0.5 }
-        },
-        {
-          "id": "step_image",
-          "type": "image",
-          "source": "{{image}}",
-          "position": { "x": 0.5, "y": 1.2, "width": 5.0, "height": 3.75 }
-        },
-        {
-          "id": "step_instructions",
-          "type": "text",
-          "content": "{{instructions}}",
-          "style": { "font": "body", "size": "body" },
-          "position": { "x": 5.8, "y": 1.2, "width": 4.7, "height": 3.75 }
-        },
-        {
-          "id": "step_warnings",
-          "type": "element_list",
-          "position": { "x": 0.5, "y": 5.2, "width": 10.0, "height": 1.0 }
-        }
-      ]
-    },
-
-    "table_page": {
-      "description": "Page dominated by a data table (e.g., BOM extract, test results)",
-      "slots": {
-        "title": { "type": "text" },
-        "table": { "type": "table", "description": "Table data with headers and rows" },
-        "extra_elements": { "type": "element_list" }
-      },
-      "layout": [
-        {
-          "id": "table_title",
-          "type": "text",
-          "content": "{{title}}",
-          "style": { "font": "heading", "size": "heading", "color": "primary" },
-          "position": { "x": 0.5, "y": 0.5, "width": 10.0, "height": 0.5 }
-        },
-        {
-          "id": "table_data",
-          "type": "table",
-          "data": "{{table}}",
-          "position": { "x": 0.5, "y": 1.2, "width": 10.0, "height": 6.8 },
-          "style": {
-            "header_font": "heading",
-            "header_size": "body",
-            "header_bg": "primary",
-            "header_color": "#ffffff",
-            "body_font": "body",
-            "body_size": "body",
-            "stripe": true,
-            "border_color": "border"
-          }
-        }
-      ]
-    },
-
-    "xray_page": {
-      "description": "X-ray inspection page with reference X-ray image",
-      "slots": {
-        "xray_image": { "type": "image", "description": "X-ray reference photo" },
-        "components": { "type": "text", "description": "List of components to verify" },
-        "criteria": { "type": "text", "description": "Acceptance criteria text" },
-        "extra_elements": { "type": "element_list" }
-      },
-      "layout": [
-        {
-          "id": "xray_image",
-          "type": "image",
-          "source": "{{xray_image}}",
-          "position": { "x": 0.5, "y": 0.5, "width": 5.0, "height": 7.5 }
-        },
-        {
-          "id": "xray_components",
-          "type": "text",
-          "content": "Components: {{components}}",
-          "style": { "font": "body", "size": "body" },
-          "position": { "x": 5.8, "y": 0.5, "width": 4.7, "height": 1.5 }
-        },
-        {
-          "id": "xray_criteria",
-          "type": "text",
-          "content": "{{criteria}}",
-          "style": { "font": "body", "size": "body" },
-          "position": { "x": 5.8, "y": 2.3, "width": 4.7, "height": 3.0 }
-        }
-      ]
+      }
     }
-  },
-
-  "header": {
-    "layout": [
-      { "id": "header_customer", "type": "text", "content": "{{customer_name}}", "position": { "x": 0.5, "y": 0.1, "width": 4.0, "height": 0.3 }, "style": { "font": "body", "size": "caption" } },
-      { "id": "header_assembly", "type": "text", "content": "{{assembly_name}}", "position": { "x": 4.5, "y": 0.1, "width": 3.0, "height": 0.3 }, "style": { "font": "body", "size": "caption" } },
-      { "id": "header_revision", "type": "text", "content": "Rev {{revision}}", "position": { "x": 7.5, "y": 0.1, "width": 1.5, "height": 0.3 }, "style": { "font": "body", "size": "caption" } },
-      { "id": "header_process_indicator", "type": "image", "source": "{{process_indicator_icon}}", "position": { "x": 9.5, "y": 0.05, "width": 0.8, "height": 0.4 }, "optional": true },
-      { "id": "header_divider", "type": "line", "position": { "x": 0, "y": 0.45, "width": 11, "height": 1 }, "style": { "color": "primary", "thickness": 1 } }
-    ]
-  },
-
-  "footer": {
-    "layout": [
-      { "id": "footer_divider", "type": "line", "position": { "x": 0, "y": 8.05, "width": 11, "height": 1 }, "style": { "color": "primary", "thickness": 1 } },
-      { "id": "footer_page_number", "type": "text", "content": "Page {{page_number}} of {{total_pages}}", "position": { "x": 5.0, "y": 8.1, "width": 2.0, "height": 0.3 }, "style": { "font": "body", "size": "caption" }, "alignment": "center" },
-      { "id": "footer_document_id", "type": "text", "content": "{{document_id}}", "position": { "x": 0.5, "y": 8.1, "width": 3.0, "height": 0.3 }, "style": { "font": "body", "size": "caption" } }
-    ]
   }
 }
