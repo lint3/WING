@@ -2,7 +2,7 @@
 
 ## Document Composition: Modifiers
 
-A document is produced by taking `doc.json` as a base and applying an ordered list of modifiers. Each modifier targets exactly one element and describes an atomic change (add, remove, move, resize, text change, etc.). Modifiers live in `/modifiers/` inside the ZIP.
+A document is produced by taking `document_template.json` as a base and applying modifiers to it.
 
 ## Pages: Template Instantiations with Slots
 
@@ -41,6 +41,5 @@ A real-world case study (serial number format change across six documents) revea
 
 ## Open Questions
 
-- **File granularity**: what should the unit of a "file" be? Too granular (one file per element) is noisy; too broad (everything in `doc.json`) makes the editor hard to navigate. The right split likely maps to the tree structure but needs worked out concretely.
-- **Template versioning**: what happens to existing documents when a template gains or removes a slot.
+- What happens to existing documents when a template gains or removes a slot?
 - How to control polarity/x-ray/self-mitigating component lists?

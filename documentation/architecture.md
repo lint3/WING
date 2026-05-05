@@ -14,18 +14,17 @@
 
 Defines the company-wide standard for general formatting, layout, font, color schemes, and so on. Should be as reusable and generic as possible. Encodes standards such as:
 
-- "DNI" components should be marked as #ff0000a0.
+- The "DNI" page should have a diagram of the CCA and some components colored #ff0000a0.
 - Page header and footer layout
-- 
 
 ## `document_data.json`
 
-Fills out fields defined in `document_template.json` and `
+Fills out fields defined in `document_template.json` and `document/*`. Also includes:
 
-- Metadata
+- Document Metadata
   - Last edited date and user (Updated automatically by app)
   - Schema version
-- Document-level data
+- Document-level assembly data
   - Customer name
   - Assembly name
   - Assembly rev name
