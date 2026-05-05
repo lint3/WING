@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "type": "modifier",
+  "id": "mod05_lead_free_indicator",
+  "description": "Adds lead-free process indicator to page header when process_type is 'lead_free'",
+
+  "conditions": {
+    "assembly.process_type": "lead_free"
+  },
+
+  "targets": [
+    {
+      "location": "header",
+      "element": "header_process_indicator",
+      "action": "set_property",
+      "property": "source",
+      "value": "assets/images/leadfree.png"
+    }
+  ],
+
+  "extra_elements": []
+}
