@@ -39,6 +39,10 @@ Vite with JSX. Built output deployed to GitHub Pages via GitHub Actions on push.
 - While JSON is invalid mid-edit, the preview freezes on the last valid state with a small, unobtrusive error indicator.
 - Page navigation: clicking any tree item renders whatever corresponds to it (to be refined later).
 
+## Cross-Document Inheritance (Unresolved)
+
+A real-world case study (serial number format change across six documents) revealed that the single-ZIP model doesn't support shared layers across multiple documents. Three options are under consideration: a browser-local layer library (IndexedDB), an external composition tool that produces ZIPs from a shared layer hierarchy, or folder-drop with client-side resolution — no decision yet.
+
 ## Open Questions
 
 - **File granularity**: what should the unit of a "file" be? Too granular (one file per element) is noisy; too broad (everything in `doc.json`) makes the editor hard to navigate. The right split likely maps to the tree structure but needs worked out concretely.
