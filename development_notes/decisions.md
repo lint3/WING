@@ -47,3 +47,4 @@ A real-world case study (serial number format change across six documents) revea
 
 - **File granularity**: what should the unit of a "file" be? Too granular (one file per element) is noisy; too broad (everything in `doc.json`) makes the editor hard to navigate. The right split likely maps to the tree structure but needs worked out concretely.
 - **Template versioning**: what happens to existing documents when a template gains or removes a slot.
+- How to control polarity/x-ray/self-mitigating component lists?

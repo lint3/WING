@@ -4,7 +4,7 @@
 
 This app will be used by a very small group of technicians to create and edit work instructions for an electronics assembly company. The company's primary operations are soldering (SMT, THA, select solder, wave), bonding, conformal coat, environmental and electrical test, and packaging.
 
-The existing workflow is slow, clunky, and relatively uncontrolled. (Files are versioned, but performing a full manual visual diff is the only way to compare two documents.) The software used is abandonware and does not match our needs well.
+The existing document editing workflow is slow, clunky, and relatively uncontrolled. (Files are versioned, but performing a full manual visual diff is the only way to compare two documents.) The software used is abandonware and does not match our needs well.
 
 ## Goal
 
@@ -12,9 +12,10 @@ Config-driven renderer + editor for multi-page instruction documents. The user s
 
 ## Definitions
 
-- Package: A bundle of files that can be rendered into a single complete work instruction document.
+- Source Package: A bundle of files that can be rendered into a single complete work instruction document.
 - Page: A single rectangular editing area, typically corresponding to one assembly step or area (SMT top, R112 bonding, etc.)
 - Page Template: A reusable chunk of JSON that adds elements to a page and creates named slots.
+- Document Template: A set of page templates.
 - Element: A single item (text box, image, etc) that can be put on a page
 - Modifier: An atomic change targeting exactly one element. Multiple modifiers are applied during rendering.
 - Slot: A named input to a template whose value is provided at instantiation time, injected into specific elements within the template.
@@ -23,38 +24,12 @@ Config-driven renderer + editor for multi-page instruction documents. The user s
 
 Served via GitHub Pages (fully static). No server-side processing. Built with Vite; see decisions.md.
 
-## File Access Model
-
-No native filesystem access. Users drag-and-drop a project `.zip` into the app to load it, and can download the rendered output (or print directly to PDF).
-
-## Requirements / End-User Workflow
+## End-User Workflow
 
 1. User launches the app. Sees a drop zone and a "create from scratch" button.
-2. User drops a `.zip` package. App parses `doc.json` and modifiers, renders the document.
-3. User edits via the three-pane UI (see decisions.md).
-4. User downloads the updated `.zip` or prints directly to PDF via the browser's print dialog.
-
-## File Package Format
-
-Deterministic ZIP container with the following:
-
-```
-/doc.json               # canonical JSON: document metadata & page layout
-/modifiers/...			# Additional modifier JSONs to append to document construction
-/assets/images/...      # embedded bitmaps (png/jpg)
-/assets/vector/...      # embedded SVGs (including CCA board view SVGs)
-/assets/bom/...         # BOM and ancillary CSV/JSON
-```
-
-## 3rd-Party Code
-
-### Framework
-
-Preact
-
-### PDF Export
-
-`window.print()` targeting Chrome's print-to-PDF, driven by `@media print` CSS. Assembly views are SVG and print as vectors. Text is real text.
+2. User drops a `.zip` package. App parses templates and modifiers, renders the document.
+3. User edits via a three-pane UI.
+4. User downloads the updated `.zip` and/or a PDF rendered by the app.
 
 ### Assembly Views
 
