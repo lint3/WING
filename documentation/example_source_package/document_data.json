@@ -20,105 +20,103 @@
       "id": "title_page",
       "parent": "header_footer",
       "slots": {
-        "page_title": "Work Instructions",
-        "extra_elements": {
-          "logo": {
-            "type": "image",
-            "loc": [4, 4],
-            "dims": [4, 3],
-            "src": "logo.png"
-          }
+        "page_title": "Work Instructions"
+      },
+      "extra_elements": {
+        "logo": {
+          "type": "image",
+          "loc": [4, 4],
+          "dims": [4, 3],
+          "src": "logo.png"
         }
       }
     }
   ],
 
-  "meatspace": {
-    "tooling": [
-      {
-        "id": "tool_01",
-        "name": "Soldering Station, Lead-Free",
-        "part_number": "WT-1001",
-        "qty": 1
-      },
-      {
-        "id": "tool_02",
-        "name": "Tip Cleaner",
-        "part_number": "TC-0042",
-        "qty": 1
-      },
-      {
-        "id": "tool_03",
-        "name": "Tweezers, ESD-Safe, Fine",
-        "part_number": "TW-ESD-04",
-        "qty": 2
-      },
-      {
-        "id": "tool_04",
-        "name": "Magnifier, 3x",
-        "part_number": "MAG-3X-01",
-        "qty": 1
-      },
-      {
-        "id": "tool_05",
-        "name": "Torque Driver, 0.5 N·m",
-        "part_number": "TD-0050",
-        "qty": 1
-      }
-    ],
-    "label_programs": [
-      {
-        "id": "lbl_01",
-        "name": "Serial Number Label — CCA-7800A",
-        "program_id": "LP-7800-SN",
-        "location": "\\\\fileserver\\labels\\7800\\"
-      }
-    ],
-    "consumables": [
-      {
-        "id": "cons_01",
-        "name": "Solder Paste, SAC305, Lead-Free",
-        "part_number": "SP-SAC305-T4",
-        "manufacturer": "Indium"
-      },
-      {
-        "id": "cons_02",
-        "name": "Flux, No-Clean",
-        "part_number": "NC-5000",
-        "manufacturer": "Kester"
-      },
-      {
-        "id": "cons_03",
-        "name": "Conformal Coat, HumiSeal 1B31",
-        "part_number": "HS-1B31-GL",
-        "manufacturer": "Chase"
-      },
-      {
-        "id": "cons_04",
-        "name": "Solvent, Flux Remover",
-        "part_number": "FR-100",
-        "manufacturer": "MG Chemicals"
-      }
-    ],
-    "custom_lists": [
-      {
-        "id": "custom_01",
-        "name": "Reference Documents",
-        "items": [
-          {
-            "description": "Assembly Drawing 7800-2001-01 Rev C",
-            "location": "PLM-7800-DWG-01"
-          },
-          {
-            "description": "IPC-A-610 Class 3 Acceptance Criteria",
-            "location": "Library"
-          },
-          {
-            "description": "Reflow Profile SP-7800-TOP-LF",
-            "location": "Oven Controller #3"
-          }
-        ]
-      }
-    ]
-  }
+  "tooling": [
+    {
+      "id": "tool_01",
+      "name": "Soldering Station, Lead-Free",
+      "part_number": "WT-1001",
+      "qty": 1
+    },
+    {
+      "id": "tool_02",
+      "name": "Tip Cleaner",
+      "part_number": "TC-0042",
+      "qty": 1
+    },
+    {
+      "id": "tool_03",
+      "name": "Tweezers, ESD-Safe, Fine",
+      "part_number": "TW-ESD-04",
+      "qty": 2
+    },
+    {
+      "id": "tool_04",
+      "name": "Magnifier, 3x",
+      "part_number": "MAG-3X-01",
+      "qty": 1
+    },
+    {
+      "id": "tool_05",
+      "name": "Torque Driver, 0.5 N·m",
+      "part_number": "TD-0050",
+      "qty": 1
+    }
+  ],
+  "label_programs": [
+    {
+      "id": "lbl_01",
+      "name": "Serial Number Label — CCA-7800A",
+      "program_id": "LP-7800-SN",
+      "location": "\\\\fileserver\\labels\\7800\\"
+    }
+  ],
+  "consumables": [
+    {
+      "id": "cons_01",
+      "name": "Solder Paste, SAC305, Lead-Free",
+      "part_number": "SP-SAC305-T4",
+      "manufacturer": "Indium"
+    },
+    {
+      "id": "cons_02",
+      "name": "Flux, No-Clean",
+      "part_number": "NC-5000",
+      "manufacturer": "Kester"
+    },
+    {
+      "id": "cons_03",
+      "name": "Conformal Coat, HumiSeal 1B31",
+      "part_number": "HS-1B31-GL",
+      "manufacturer": "Chase"
+    },
+    {
+      "id": "cons_04",
+      "name": "Solvent, Flux Remover",
+      "part_number": "FR-100",
+      "manufacturer": "MG Chemicals"
+    }
+  ],
+  "custom_lists": [
+    {
+      "id": "custom_01",
+      "name": "Reference Documents",
+      "items": [
+        {
+          "description": "Assembly Drawing 7800-2001-01 Rev C",
+          "location": "PLM-7800-DWG-01"
+        },
+        {
+          "description": "IPC-A-610 Class 3 Acceptance Criteria",
+          "location": "Library"
+        },
+        {
+          "description": "Reflow Profile SP-7800-TOP-LF",
+          "location": "Oven Controller #3"
+        }
+      ]
+    }
+  ]
 }
