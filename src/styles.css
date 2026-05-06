@@ -97,4 +97,36 @@ body {
 #file-list li {
     padding: 0.25rem 0;
     font-size: 0.9rem;
+    cursor: pointer;
+}
+
+#file-list li:hover {
+    text-decoration: underline;
+}
+
+#file-list li.selected {
+    font-weight: bold;
+}
+
+/* Editor pane */
+#editor-pane {
+    display: flex;
+    flex-direction: column;
+}
+
+#editor-header {
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid #ccc;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+#editor-textarea {
+    flex: 1;
+    resize: none;
+    border: none;
+    padding: 1rem;
+    font-family: monospace;
+    font-size: 0.9rem;
+    outline: none;
 }

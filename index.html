@@ -26,10 +26,13 @@
                 </div>
             </nav>
             <main id="preview-pane"></main>
-            <section id="editor-pane"></section>
+            <section id="editor-pane">
+                <div id="editor-header"><span id="editor-filename"></span></div>
+                <textarea id="editor-textarea" spellcheck="false"></textarea>
+            </section>
         </div>
 
         <script src="lib/jszip.min.js"></script>
-        <script src="src/app.js"></script>
+        <script type="module" src="src/app.js"></script>
     </body>
 </html>
