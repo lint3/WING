@@ -1,35 +1,35 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WING - Work Instruction Next Generation</title>
-  <link rel="stylesheet" href="src/styles.css">
-</head>
-<body>
-  <div id="drop-overlay">
-    <h1>WING</h1>
-    <p>Drop a <code>.zip</code> source package here</p>
-    <p>or</p>
-    <button id="create-from-scratch">Create from scratch</button>
-  </div>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>WING - Work Instruction Next Generation</title>
+        <link rel="stylesheet" href="src/styles.css" />
+    </head>
+    <body>
+        <div id="drop-overlay">
+            <h1>WING</h1>
+            <p>Drop a <code>.zip</code> source package here</p>
+            <p>or</p>
+            <button id="create-from-scratch">Create from scratch</button>
+        </div>
 
-  <div id="editor" hidden>
-    <nav id="left-pane">
-      <div id="left-content">
-        <div id="tab-tree">Tree</div>
-        <div id="tab-files"><ul id="file-list"></ul></div>
-      </div>
-      <div id="left-tabs">
-        <button data-tab="tab-tree">Tree</button>
-        <button data-tab="tab-files">Files</button>
-      </div>
-    </nav>
-    <main id="preview-pane"></main>
-    <section id="editor-pane"></section>
-  </div>
+        <div id="editor" hidden>
+            <nav id="left-pane">
+                <div id="left-content">
+                    <div id="tab-tree">Tree</div>
+                    <div id="tab-files"><ul id="file-list"></ul></div>
+                </div>
+                <div id="left-tabs">
+                    <button data-tab="tab-tree">Tree</button>
+                    <button data-tab="tab-files">Files</button>
+                </div>
+            </nav>
+            <main id="preview-pane"></main>
+            <section id="editor-pane"></section>
+        </div>
 
-  <script src="node_modules/jszip/dist/jszip.min.js"></script>
-  <script src="src/app.js"></script>
-</body>
+        <script src="lib/jszip.min.js"></script>
+        <script src="src/app.js"></script>
+    </body>
 </html>
