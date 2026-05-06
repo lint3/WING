@@ -39,8 +39,60 @@ body {
   overflow: hidden;
 }
 
-#tree-pane, #preview-pane, #editor-pane {
+#left-pane, #preview-pane, #editor-pane {
   border: 1px solid #ccc;
-  padding: 1rem;
   overflow: auto;
+}
+
+#left-pane {
+  display: flex;
+  flex-direction: column;
+}
+
+#left-content {
+  flex: 1;
+  overflow: auto;
+  padding: 1rem;
+}
+
+#left-content > div {
+  display: none;
+}
+
+#left-content > .active {
+  display: block;
+}
+
+#left-tabs {
+  display: flex;
+  border-top: 1px solid #ccc;
+}
+
+#left-tabs button {
+  flex: 1;
+  padding: 0.5rem;
+  border: none;
+  border-right: 1px solid #ccc;
+  background: #f5f5f5;
+  cursor: pointer;
+}
+
+#left-tabs button:last-child {
+  border-right: none;
+}
+
+#left-tabs button.active {
+  background: #ddd;
+  font-weight: bold;
+}
+
+#file-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#file-list li {
+  padding: 0.25rem 0;
+  font-size: 0.9rem;
 }

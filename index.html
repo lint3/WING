@@ -15,11 +15,21 @@
   </div>
 
   <div id="editor" hidden>
-    <nav id="tree-pane"></nav>
+    <nav id="left-pane">
+      <div id="left-content">
+        <div id="tab-tree">Tree</div>
+        <div id="tab-files"><ul id="file-list"></ul></div>
+      </div>
+      <div id="left-tabs">
+        <button data-tab="tab-tree">Tree</button>
+        <button data-tab="tab-files">Files</button>
+      </div>
+    </nav>
     <main id="preview-pane"></main>
     <section id="editor-pane"></section>
   </div>
 
+  <script src="node_modules/jszip/dist/jszip.min.js"></script>
   <script src="src/app.js"></script>
 </body>
 </html>
