@@ -3,7 +3,7 @@ const state = {
   parsed: new Map(),
 };
 
-function addFile(path, content) {
+export function addFile(path, content) {
   state.files.set(path, content);
   if (path.endsWith('.json')) {
     try {
@@ -14,7 +14,7 @@ function addFile(path, content) {
   }
 }
 
-function updateFile(path, content) {
+export function updateFile(path, content) {
   state.files.set(path, content);
   if (path.endsWith('.json')) {
     try {
@@ -25,14 +25,14 @@ function updateFile(path, content) {
   }
 }
 
-function getRaw(path) {
+export function getRaw(path) {
   return state.files.get(path) ?? '';
 }
 
-function getParsed(path) {
+export function getParsed(path) {
   return state.parsed.get(path);
 }
 
-function getAllPaths() {
+export function getAllPaths() {
   return [...state.files.keys()];
 }
