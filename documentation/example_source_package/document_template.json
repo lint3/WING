@@ -49,14 +49,12 @@
       "page_height": 8.5,
       "page_margin": 0.125,
       "page_background": "#ffffffff",
-      "defaults": {
-        "font_size_pt": 10,
-        "font": "Arial",
-        "font_color": "#000000ff",
-        "line_thickness_pt": "hairline",
-        "line_color": "#000000ff",
-        "fill_color": "#00000000"
-      },
+      "font_size_pt": 10,
+      "font": "Arial",
+      "font_color": "#000000ff",
+      "line_thickness_pt": "hairline",
+      "line_color": "#000000ff",
+      "fill_color": "#00000000",
       "extra_vars": {
         "dni_color": {
           "type": "color",

@@ -1,22 +1,8 @@
 # Project Architecture
 
-## Source Package Structure
+See also: `documentation/package_spec.md`
 
-```
-/document_template.json   # Base document layout template.
-/document_data.json       # Data specific to this specific document
-/document/...			        # Additional JSONs to append to document construction
-/assets/images/...        # embedded images (raster and/or vector, but excluding CCA board SVGs)
-/assets/cca/...           # CCA SVG images and BOM
-```
 
-## `document_template.json`
-
-Defines the company-wide standard for general formatting, layout, font, color schemes, and so on. Should be as reusable and generic as possible. Encodes standards such as:
-
-- The "DNI" page should have a diagram of the CCA and some components colored #ff0000a0.
-- Page header and footer layout
-- Page templates
 
 ## `document_data.json`
 
