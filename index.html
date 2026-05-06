@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WING - Work Instruction Next Generation</title>
+  <link rel="stylesheet" href="src/styles.css">
+</head>
+<body>
+  <div id="drop-overlay">
+    <h1>WING</h1>
+    <p>Drop a <code>.zip</code> source package here</p>
+    <p>or</p>
+    <button id="create-from-scratch">Create from scratch</button>
+  </div>
+
+  <div id="editor" hidden>
+    <nav id="tree-pane"></nav>
+    <main id="preview-pane"></main>
+    <section id="editor-pane"></section>
+  </div>
+
+  <script src="src/app.js"></script>
+</body>
+</html>
