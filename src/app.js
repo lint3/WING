@@ -1,4 +1,6 @@
 import { addFile, updateFile, getRaw, getParsed, getAllPaths } from './state.js';
+import { parseDocument } from './parser.js';
+import { renderPage } from './renderer.js';
 
 const dropOverlay = document.getElementById('drop-overlay');
 const editor = document.getElementById('editor');
@@ -8,8 +10,12 @@ const leftTabs = document.getElementById('left-tabs');
 const fileList = document.getElementById('file-list');
 const editorFilename = document.getElementById('editor-filename');
 const editorTextarea = document.getElementById('editor-textarea');
+const previewPane = document.getElementById('preview-pane');
+const previewFilmstrip = document.getElementById('preview-filmstrip');
 
 let currentFile = null;
+let renderTimer = null;
+const RENDER_DELAY = 300;
 
 function openEditor() {
   dropOverlay.style.display = 'none';
@@ -43,11 +49,43 @@ function openFile(path) {
   renderFileList();
 }
 
+function renderDocument() {
+  const result = parseDocument({
+    getParsed: (p) => getParsed(p),
+    getAllPaths: () => getAllPaths(),
+  });
+
+  previewFilmstrip.innerHTML = '';
+
+  if (!result.resolvedPages || result.resolvedPages.length === 0) return;
+
+  for (const page of result.resolvedPages) {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'filmstrip-page';
+
+    const label = document.createElement('div');
+    label.className = 'filmstrip-page-label';
+    label.textContent = page.pageId;
+    wrapper.appendChild(label);
+
+    const svg = renderPage(page);
+    wrapper.appendChild(svg);
+
+    previewFilmstrip.appendChild(wrapper);
+  }
+}
+
 editorTextarea.addEventListener('input', () => {
   if (currentFile) {
     updateFile(currentFile, editorTextarea.value);
+    scheduleRender();
   }
 });
+
+function scheduleRender() {
+  clearTimeout(renderTimer);
+  renderTimer = setTimeout(renderDocument, RENDER_DELAY);
+}
 
 fileList.addEventListener('click', (e) => {
   const li = e.target.closest('li');
@@ -66,6 +104,29 @@ async function handleZipFile(file) {
   renderFileList();
   openEditor();
   switchTab('tab-files');
+  renderDocument();
+}
+
+async function loadTestData() {
+  const paths = [
+    'document_template.json',
+    'document_data.json',
+  ];
+  const sources = [
+    'tests/examples/basic_elements.template.json',
+    'tests/examples/basic_elements.data.json',
+  ];
+
+  for (let i = 0; i < paths.length; i++) {
+    const resp = await fetch(sources[i]);
+    const text = await resp.text();
+    addFile(paths[i], text);
+  }
+
+  renderFileList();
+  openEditor();
+  switchTab('tab-files');
+  renderDocument();
 }
 
 leftTabs.addEventListener('click', (e) => {
@@ -95,4 +156,5 @@ dropOverlay.addEventListener('drop', (e) => {
 
 createBtn.addEventListener('click', () => {
   openEditor();
+  loadTestData();
 });

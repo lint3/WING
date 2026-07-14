@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+
+  "metadata": {
+    "document_id": "TEST-0001",
+    "customer_name": "Test Customer",
+    "assembly_name": "Basic Elements Test Assembly",
+    "assembly_number": "0000-TEST-01",
+    "assembly_rev": "A",
+    "process_type": "lead_free"
+  },
+
+  "pages": [
+    {
+      "id": "page_01",
+      "parent": "basic_elements_page",
+      "slots": {}
+    },
+    {
+      "id": "page_02",
+      "parent": "minimal_page",
+      "slots": {}
+    }
+  ]
+}

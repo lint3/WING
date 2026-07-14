@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "name": "Basic Elements Test Template",
+
+  "page_templates": {
+    "empty_base": {
+      "description": "Empty base landscape letter page",
+      "page_width": 11,
+      "page_height": 8.5,
+      "page_margin": 0.125,
+      "page_background": "#ffffffff",
+      "font_size_pt": 12,
+      "font": "Arial",
+      "font_color": "#000000ff",
+      "line_thickness_pt": 1,
+      "line_color": "#000000ff",
+      "fill_color": "#00000000"
+    },
+
+    "basic_elements_page": {
+      "description": "Page with one of each basic element type",
+      "parent": "empty_base",
+
+      "elements": {
+        "title_text": {
+          "type": "text",
+          "loc": [0.5, 0.5],
+          "dims": [10, 0.5],
+          "content": "Basic Elements Test Page",
+          "font_size_pt": 18,
+          "font_color": "#222222ff"
+        },
+
+        "body_text": {
+          "type": "text",
+          "loc": [0.5, 1.25],
+          "dims": [10, 0.75],
+          "content": "This page contains one of each basic element type for renderer testing."
+        },
+
+        "red_box": {
+          "type": "rectangle",
+          "loc": [0.5, 2.5],
+          "dims": [3, 2],
+          "line_thickness_pt": 2,
+          "line_color": "#ff0000ff",
+          "fill_color": "#ff000020"
+        },
+
+        "green_ellipse": {
+          "type": "ellipse",
+          "loc": [4.5, 2.5],
+          "dims": [3, 2],
+          "line_thickness_pt": 2,
+          "line_color": "#00aa00ff",
+          "fill_color": "#00ff0020"
+        },
+
+        "sample_image": {
+          "type": "image",
+          "loc": [0.5, 5.25],
+          "dims": [3, 2.5],
+          "src": "assets/images/sample.png"
+        },
+
+        "rich_text_block": {
+          "type": "rich_text",
+          "loc": [4.5, 5.25],
+          "dims": [5.5, 2.5],
+          "content": "<b>Rich text</b> with <i>formatting</i> and a list:\n- Item one\n- Item two\n- Item three"
+        }
+      }
+    },
+
+    "minimal_page": {
+      "description": "Bare minimum page — inherits everything from base, adds nothing",
+      "parent": "empty_base"
+    }
+  }
+}

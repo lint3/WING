@@ -130,3 +130,31 @@ body {
     font-size: 0.9rem;
     outline: none;
 }
+
+/* Filmstrip (preview pane) */
+#preview-filmstrip {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    gap: 1rem;
+}
+
+.filmstrip-page {
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+.filmstrip-page svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+.filmstrip-page-label {
+    font-size: 0.7rem;
+    color: #999;
+    padding: 0.25rem 0.5rem;
+    background: #f5f5f5;
+    border-bottom: 1px solid #eee;
+}
