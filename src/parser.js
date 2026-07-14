@@ -1,24 +1,52 @@
 export function parseDocument(state) {
+  const allPaths = state.getAllPaths();
+  console.group('parseDocument');
+  console.log('all file paths in state:', allPaths);
+
   const templateFile = state.getParsed('document_template.json');
   const dataFile = state.getParsed('document_data.json');
 
-  console.group('parseDocument');
-  console.log('templateFile present:', !!templateFile, 'dataFile present:', !!dataFile);
+  console.log('templateFile (canonical):', templateFile ? 'found' : 'not found');
+  console.log('dataFile (canonical):', dataFile ? 'found' : 'not found');
+
+  let effectiveTemplateFile = templateFile;
+  let effectiveDataFile = dataFile;
+
+  if (!effectiveTemplateFile) {
+    for (const path of allPaths) {
+      const parsed = state.getParsed(path);
+      if (parsed && parsed.page_templates) {
+        console.log('  using template from:', path);
+        effectiveTemplateFile = parsed;
+        break;
+      }
+    }
+  }
+  if (!effectiveDataFile) {
+    for (const path of allPaths) {
+      const parsed = state.getParsed(path);
+      if (parsed && Array.isArray(parsed.pages)) {
+        console.log('  using data from:', path);
+        effectiveDataFile = parsed;
+        break;
+      }
+    }
+  }
 
   const nodeMap = {};
 
-  if (templateFile && templateFile.page_templates) {
-    const tkeys = Object.keys(templateFile.page_templates);
+  if (effectiveTemplateFile && effectiveTemplateFile.page_templates) {
+    const tkeys = Object.keys(effectiveTemplateFile.page_templates);
     console.log('template IDs:', tkeys);
-    for (const [id, tmpl] of Object.entries(templateFile.page_templates)) {
+    for (const [id, tmpl] of Object.entries(effectiveTemplateFile.page_templates)) {
       nodeMap[id] = { type: 'template', id, parent: tmpl.parent || null, data: tmpl };
     }
   }
 
   const pages = [];
-  if (dataFile && Array.isArray(dataFile.pages)) {
-    console.log('page count:', dataFile.pages.length);
-    for (const page of dataFile.pages) {
+  if (effectiveDataFile && Array.isArray(effectiveDataFile.pages)) {
+    console.log('page count:', effectiveDataFile.pages.length);
+    for (const page of effectiveDataFile.pages) {
       console.log('  page:', page.id, '→ parent:', page.parent || '(none)');
       nodeMap[page.id] = { type: 'page', id: page.id, parent: page.parent || null, data: page };
       pages.push(nodeMap[page.id]);
@@ -27,8 +55,9 @@ export function parseDocument(state) {
 
   console.log('nodeMap keys:', Object.keys(nodeMap));
 
+  const metadata = effectiveDataFile ? (effectiveDataFile.metadata || {}) : {};
   const resolvedPages = pages.map((p) => {
-    const resolved = resolvePage(p, nodeMap, dataFile.metadata || {});
+    const resolved = resolvePage(p, nodeMap, metadata);
     console.log('resolved page:', p.id, '| chain length:', resolved.chain.length,
       '| properties:', Object.keys(resolved.properties).length,
       '| elements:', Object.keys(resolved.elements).length,
