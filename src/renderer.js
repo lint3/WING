@@ -15,7 +15,7 @@ export function renderPage(resolvedPage) {
   svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
 
   if (p.page_background) {
-    const bg = el('rect');
+    const bg = svgEl('rect');
     setAttrs(bg, { x: 0, y: 0, width, height, fill: p.page_background });
     svg.appendChild(bg);
   }
@@ -48,7 +48,7 @@ function renderElement(el, defaults) {
 }
 
 function renderRect(el, defaults) {
-  const rect = el('rect');
+  const rect = svgEl('rect');
   setAttrs(rect, {
     x: el.loc[0], y: el.loc[1],
     width: el.dims[0], height: el.dims[1],
@@ -60,7 +60,7 @@ function renderRect(el, defaults) {
 }
 
 function renderEllipse(el, defaults) {
-  const e = el('ellipse');
+  const e = svgEl('ellipse');
   setAttrs(e, {
     cx: el.loc[0] + el.dims[0] / 2,
     cy: el.loc[1] + el.dims[1] / 2,
@@ -74,7 +74,7 @@ function renderEllipse(el, defaults) {
 }
 
 function renderText(el, defaults) {
-  const text = el('text');
+  const text = svgEl('text');
   const fontSize = el.font_size_pt ?? defaults.font_size_pt ?? 12;
 
   setAttrs(text, {
@@ -91,7 +91,7 @@ function renderText(el, defaults) {
   text.setAttribute('dominant-baseline', 'hanging');
 
   for (let i = 0; i < lines.length; i++) {
-    const tspan = el('tspan');
+    const tspan = svgEl('tspan');
     tspan.setAttribute('x', el.loc[0]);
     if (i > 0) tspan.setAttribute('dy', `${fontSize * 1.2}pt`);
     tspan.textContent = lines[i];
@@ -102,7 +102,7 @@ function renderText(el, defaults) {
 }
 
 function renderRichText(el, defaults) {
-  const fo = el('foreignObject');
+  const fo = svgEl('foreignObject');
   setAttrs(fo, {
     x: el.loc[0],
     y: el.loc[1],
@@ -122,7 +122,7 @@ function renderRichText(el, defaults) {
 }
 
 function renderImage(el) {
-  const img = el('image');
+  const img = svgEl('image');
   setAttrs(img, {
     x: el.loc[0],
     y: el.loc[1],
@@ -135,7 +135,7 @@ function renderImage(el) {
   return img;
 }
 
-function el(tag) {
+function svgEl(tag) {
   return document.createElementNS(SVG_NS, tag);
 }
 
