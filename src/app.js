@@ -12,6 +12,7 @@ const editorFilename = document.getElementById('editor-filename');
 const editorTextarea = document.getElementById('editor-textarea');
 const previewPane = document.getElementById('preview-pane');
 const previewFilmstrip = document.getElementById('preview-filmstrip');
+const treeContainer = document.getElementById('tree-container');
 
 let currentFile = null;
 let renderTimer = null;
@@ -43,21 +44,150 @@ function renderFileList() {
 }
 
 function openFile(path) {
+  console.log('openFile:', path);
   currentFile = path;
   editorFilename.textContent = path;
   editorTextarea.value = getRaw(path);
   renderFileList();
 }
 
+function renderTree(parseResult) {
+  const { nodeMap, resolvedPages } = parseResult;
+
+  const templates = Object.values(nodeMap).filter((n) => n.type === 'template');
+  const pages = Object.values(nodeMap).filter((n) => n.type === 'page');
+
+  const root = document.createElement('div');
+
+  const tHeader = elTreeRow('Templates (' + templates.length + ')', 'section');
+  root.appendChild(tHeader);
+  for (const t of templates) {
+    const row = elTreeRow(t.id, 'template', t.parent, null);
+    root.appendChild(row);
+    const sub = elTreeSub();
+    sub.appendChild(elTreeRow('elements: ' + Object.keys(t.data.elements || {}).join(', '), 'prop'));
+    const slots = t.data.slots || {};
+    const slotKeys = Object.keys(slots);
+    if (slotKeys.length) {
+      sub.appendChild(elTreeRow('slots: ' + slotKeys.join(', '), 'prop'));
+    }
+    for (const child of row.querySelectorAll('.tree-children')[0]?.children || []) {
+      sub.appendChild(child.cloneNode(true));
+    }
+    row.querySelector('.tree-children').appendChild(sub);
+  }
+
+  const pHeader = elTreeRow('Pages (' + pages.length + ')', 'section');
+  root.appendChild(pHeader);
+  for (const p of pages) {
+    const resolved = resolvedPages.find((r) => r.pageId === p.id);
+    const chainStr = resolved ? resolved.chain.map((c) => c.id).join(' → ') : '';
+    const row = elTreeRow(p.id, 'page', p.parent, null);
+    root.appendChild(row);
+    const sub = elTreeSub();
+    if (chainStr) sub.appendChild(elTreeRow('chain: ' + chainStr, 'prop'));
+    if (resolved) {
+      sub.appendChild(elTreeRow('properties: ' + Object.keys(resolved.properties).join(', '), 'prop'));
+      sub.appendChild(elTreeRow('elements: ' + Object.keys(resolved.elements).join(', '), 'prop'));
+      const slotFills = p.data.slots || {};
+      const fillKeys = Object.keys(slotFills);
+      if (fillKeys.length) {
+        for (const k of fillKeys) {
+          sub.appendChild(elTreeRow(`slot "${k}" = "${slotFills[k]}"`, 'prop'));
+        }
+      }
+      const extras = p.data.extra_elements || {};
+      const extraKeys = Object.keys(extras);
+      if (extraKeys.length) {
+        sub.appendChild(elTreeRow('extra elements: ' + extraKeys.join(', '), 'prop'));
+      }
+    }
+    row.querySelector('.tree-children').appendChild(sub);
+  }
+
+  treeContainer.innerHTML = '';
+  treeContainer.appendChild(root);
+}
+
+function elTreeRow(label, kind, parent, count) {
+  const row = document.createElement('div');
+  row.className = 'tree-row';
+
+  const toggle = document.createElement('span');
+  toggle.className = 'tree-toggle';
+
+  const text = document.createElement('span');
+  text.className = 'tree-label';
+  text.textContent = label;
+
+  const badge = document.createElement('span');
+  badge.className = 'tree-badge ' + (kind || '');
+  if (kind === 'section') {
+    badge.textContent = '';
+  } else if (kind) {
+    badge.textContent = kind || '';
+    if (count != null) badge.textContent += ' (' + count + ')';
+  }
+
+  row.appendChild(toggle);
+  row.appendChild(badge);
+  row.appendChild(text);
+
+  if (parent) {
+    const pSpan = document.createElement('span');
+    pSpan.className = 'tree-parent';
+    pSpan.textContent = '← ' + parent;
+    row.appendChild(pSpan);
+  }
+
+  const children = document.createElement('div');
+  children.className = 'tree-children';
+  children.style.display = 'none';
+  row.appendChild(children);
+
+  toggle.addEventListener('click', () => {
+    const expanded = children.style.display !== 'none';
+    children.style.display = expanded ? 'none' : 'block';
+    toggle.textContent = expanded ? '▸' : '▾';
+    toggle.classList.toggle('expanded', !expanded);
+  });
+
+  if (kind === 'section') {
+    children.style.display = 'block';
+    toggle.textContent = '▾';
+    toggle.classList.add('expanded');
+    row.classList.add('tree-section');
+  } else if (kind === 'prop') {
+    toggle.textContent = '';
+    toggle.style.visibility = 'hidden';
+  } else {
+    toggle.textContent = '▸';
+  }
+
+  return row;
+}
+
+function elTreeSub() {
+  const div = document.createElement('div');
+  div.className = 'tree-sub';
+  return div;
+}
+
 function renderDocument() {
+  console.group('renderDocument');
   const result = parseDocument({
     getParsed: (p) => getParsed(p),
     getAllPaths: () => getAllPaths(),
   });
 
+  renderTree(result);
   previewFilmstrip.innerHTML = '';
 
-  if (!result.resolvedPages || result.resolvedPages.length === 0) return;
+  if (!result.resolvedPages || result.resolvedPages.length === 0) {
+    console.log('no pages to render');
+    console.groupEnd();
+    return;
+  }
 
   for (const page of result.resolvedPages) {
     const wrapper = document.createElement('div');
@@ -73,6 +203,7 @@ function renderDocument() {
 
     previewFilmstrip.appendChild(wrapper);
   }
+  console.groupEnd();
 }
 
 editorTextarea.addEventListener('input', () => {
@@ -93,8 +224,10 @@ fileList.addEventListener('click', (e) => {
 });
 
 async function handleZipFile(file) {
+  console.log('handleZipFile:', file.name, '(' + (file.size / 1024).toFixed(1) + ' KB)');
   const jszip = await JSZip.loadAsync(file);
   const entries = Object.keys(jszip.files).filter((p) => !jszip.files[p].dir).sort();
+  console.log('  entries:', entries.length, entries);
 
   for (const path of entries) {
     const content = await jszip.files[path].async('string');
@@ -108,6 +241,7 @@ async function handleZipFile(file) {
 }
 
 async function loadTestData() {
+  console.log('loadTestData: fetching test files...');
   const paths = [
     'document_template.json',
     'document_data.json',
@@ -120,6 +254,7 @@ async function loadTestData() {
   for (let i = 0; i < paths.length; i++) {
     const resp = await fetch(sources[i]);
     const text = await resp.text();
+    console.log('  loaded', paths[i], 'from', sources[i], '(' + text.length + ' bytes)');
     addFile(paths[i], text);
   }
 

@@ -5,6 +5,9 @@ export function renderPage(resolvedPage) {
   const width = p.page_width || 11;
   const height = p.page_height || 8.5;
 
+  console.log('renderPage:', resolvedPage.pageId, '| size:', width, '×', height,
+    '| elements:', Object.keys(resolvedPage.elements));
+
   const svg = document.createElementNS(SVG_NS, 'svg');
   svg.setAttribute('xmlns', SVG_NS);
   svg.setAttribute('width', `${width}in`);
@@ -18,10 +21,13 @@ export function renderPage(resolvedPage) {
   }
 
   for (const [name, elem] of Object.entries(resolvedPage.elements)) {
+    console.log('  element:', name, 'type:', elem.type, 'loc:', elem.loc, 'dims:', elem.dims);
     const node = renderElement(elem, p);
     if (node) {
       node.setAttribute('data-element-name', name);
       svg.appendChild(node);
+    } else {
+      console.warn('  → skipped (null render)');
     }
   }
 
